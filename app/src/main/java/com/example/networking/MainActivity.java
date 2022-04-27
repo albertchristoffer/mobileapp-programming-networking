@@ -18,7 +18,6 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
-    private final String JSON_FILE = "mountains.json";
     private final String TAG = "==>";
     private ArrayList<Mountain> listOfMountains;
     RecyclerView recyclerView;
