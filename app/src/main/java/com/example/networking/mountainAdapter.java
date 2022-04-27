@@ -4,8 +4,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class mountainAdapter extends RecyclerView.Adapter<mountainViewHolder> {
+
+    private List<Mountain> mountains;
+
+    public mountainAdapter(List<Mountain> mountains) {
+        this.mountains = mountains;
+    }
 
     @NonNull
     @Override
@@ -20,6 +27,6 @@ public class mountainAdapter extends RecyclerView.Adapter<mountainViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mountains.size();
     }
 }
