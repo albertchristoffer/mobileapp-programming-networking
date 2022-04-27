@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
     private final String JSON_FILE = "mountains.json";
     private final String TAG = "==>";
+    private ArrayList<Mountain> listOfMountains;
     RecyclerView recyclerView;
 
     @Override
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     public void onPostExecute(String json) {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
-        ArrayList<Mountain> listOfMountains = gson.fromJson(json, type);
+        listOfMountains = gson.fromJson(json, type);
         Log.d(TAG, json);
     }
 
