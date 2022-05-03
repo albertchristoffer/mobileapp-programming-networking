@@ -2,6 +2,7 @@ package com.example.networking;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         //new JsonFile(this, this).execute(JSON_FILE);
         new JsonTask(this).execute(JSON_URL);
         recyclerView = findViewById(R.id.my_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
     @Override
     public void onPostExecute(String json) {
