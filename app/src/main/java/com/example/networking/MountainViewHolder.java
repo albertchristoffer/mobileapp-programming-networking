@@ -6,13 +6,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class mountainViewHolder extends RecyclerView.ViewHolder {
+public class MountainViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name;
     public TextView height;
     public TextView location;
 
-    public mountainViewHolder(@NonNull View itemView) {
+    public MountainViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 }
