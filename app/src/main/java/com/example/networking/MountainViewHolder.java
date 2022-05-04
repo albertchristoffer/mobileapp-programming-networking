@@ -14,5 +14,9 @@ public class MountainViewHolder extends RecyclerView.ViewHolder {
 
     public MountainViewHolder(@NonNull View itemView) {
         super(itemView);
+
+        name = itemView.findViewById(R.id.name);
+        location = itemView.findViewById(R.id.location);
+        height = itemView.findViewById(R.id.height);
     }
 }

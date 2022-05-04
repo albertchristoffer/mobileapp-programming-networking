@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         new JsonTask(this).execute(JSON_URL);
     }
 
-
     @Override
     public void onPostExecute(String json) {
         Gson gson = new Gson();
@@ -43,5 +42,4 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         listOfMountains = gson.fromJson(json, type);
         Log.d(TAG, json);
     }
-
 }
