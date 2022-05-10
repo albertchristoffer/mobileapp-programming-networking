@@ -1,11 +1,13 @@
 package com.example.networking;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Mountain {
 
 private String name;
 private String location;
-private int height;
+@SerializedName("size") private int height;
 
     public String getName() {
         return name;
