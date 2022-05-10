@@ -13,10 +13,6 @@ public class MountainAdapter extends RecyclerView.Adapter<MountainViewHolder> {
 
     private List<Mountain> mountains = new ArrayList();
 
-    public MountainAdapter(List<Mountain> mountains){
-        this.mountains = mountains;
-    }
-
     @NonNull
     @Override
     public MountainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -26,9 +22,11 @@ public class MountainAdapter extends RecyclerView.Adapter<MountainViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MountainViewHolder holder, int position) {
-        holder.name.setText(mountains.get(position).getName());
-        holder.location.setText(mountains.get(position).getLocation());
-        holder.height.setText(String.valueOf(mountains.get(position).getHeight()));
+        Mountain mountain = mountains.get(position);
+
+        holder.name.setText(mountain.getName());
+        holder.location.setText(mountain.getLocation());
+        holder.height.setText(String.valueOf(mountain.getHeight()));
     }
 
     @Override

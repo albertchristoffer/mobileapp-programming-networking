@@ -1,42 +1,53 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+Uppgiften innefattade att hämta Json-data från en hemsida, parsa datan via gson för att slutligen visa datan i en recycleView.
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
+I MainActivity hämtas först json-datan från hemsidan och sparas i en variabel samt att en adapter, recyclerView och en tom lista vid namn listOfMountains deklareras.
+Variabeln recyclerView kopplas ocskå till recyclerViewens:s ID i aktiviteten.
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    listOfMountains = new ArrayList<Mountain>();
+    adapter = new MountainAdapter(listOfMountains);
+
+    recyclerView = findViewById(R.id.my_recycler);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(adapter);
+
+    new JsonTask(this).execute(JSON_URL);
 }
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Vi ber också JSON-datan från hemsidan parsas i onPostExecute med hjälp av gson.
+Variabeln listOfMountains tilldelas då informationen från den parsade gson-datan som skickas vidare till adaptern.
+```
+public void onPostExecute(String json) {
+    Gson gson = new Gson();
+    Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
+    listOfMountains = gson.fromJson(json, type);
+    adapter.setMountains(listOfMountains);
+    adapter.notifyDataSetChanged();
+    Log.d(TAG, json);
+}
+```
 
-![](android.png)
+I adaptern MountainAdapter binder vi sedan datan från ett Mountain-objekt i vår lista till viewHoldern samt hämtar storleken på listan.
+I ViewHoldern kopplas variablerna till ID:et på de TextViews som finns i recyclerViewens ItemView.
+```
+public void onBindViewHolder(@NonNull MountainViewHolder holder, int position) {
+    Mountain mountain = mountains.get(position);
 
-Läs gärna:
+    holder.name.setText(mountain.getName());
+    holder.location.setText(mountain.getLocation());
+    holder.height.setText(String.valueOf(mountain.getHeight()));
+}
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+public int getItemCount() {
+    return mountains.size();
+}
+```
+Nedan finns en screenshot på recyclerViwen med data.
+![](recycler.png)
+
